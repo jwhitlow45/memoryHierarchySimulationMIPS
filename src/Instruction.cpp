@@ -1,5 +1,8 @@
 #include "Instruction.hpp"
 #include <math.h>
+#include <iostream>
+
+using namespace std;
 
 int Instruction::posBinaryToInt(string binary)
 {
@@ -11,7 +14,15 @@ int Instruction::posBinaryToInt(string binary)
 
 void Instruction::decodeInstruction(string binInst)
 {
-    opcode = posBinaryToInt(binInst.substr(0,6));
-    baseReg = posBinaryToInt(binInst.substr(6,5));
-    offset = posBinaryToInt(binInst.substr(16,16));
+    opcode = posBinaryToInt(binInst.substr(0, 6));
+    baseReg = posBinaryToInt(binInst.substr(6, 5));
+    offset = posBinaryToInt(binInst.substr(16, 16));
+    targetReg = posBinaryToInt(binInst.substr(11, 5));
+    byteAddress = baseReg + offset;
+    wordAddress = byteAddress / 4;
+}
+
+void Instruction::print()
+{
+    cout << opcode << ' ' << baseReg << ' ' << targetReg << ' ' << offset;
 }

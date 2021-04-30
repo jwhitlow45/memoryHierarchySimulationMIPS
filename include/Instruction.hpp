@@ -11,8 +11,9 @@ public:
     int offset;      //memory offset
     int targetReg;   //target register (rt)
     int byteAddress; //byte address (rs + offset)
-    int wordAddress; //word address (byte address * 4)
+    int wordAddress; //word address (byte address / 4)
 
-    int posBinaryToInt(string);
-    void decodeInstruction(string);
+    int posBinaryToInt(string);     //convert pos binary to an int
+    void decodeInstruction(string); //decode 32-bit instruction
+    void print();                   //print instruction
 };

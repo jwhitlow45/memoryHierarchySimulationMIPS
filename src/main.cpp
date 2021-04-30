@@ -13,8 +13,6 @@ void bitPrint(int, int); //prints out an integer in binary
 
 int main()
 {
-    Instruction Test;
-    cout<<Test.posBinaryToInt("101011");
 
     return 0;
 }
