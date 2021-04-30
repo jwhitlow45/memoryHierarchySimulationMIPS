@@ -9,7 +9,9 @@
 #include "Memory.hpp"
 #include "RegFile.hpp"
 
-#define NUM_INST 24     //number of instructions in the object code file
+#define NUM_INST 24 //number of instructions in the object code file
+#define LW 35       //load word opcode
+#define SW 43       //store word opcode
 
 using namespace std;
 
@@ -18,6 +20,11 @@ void bitPrint(int, int); //prints out an integer in binary
 
 int main()
 {
+    //Instantiate Cache, Main Memory, and REgister File
+    RegFile RegisterFile;
+    Cache CacheMemory;
+    Memory MainMemory;
+
     //create instruction array to store instructions
     Instruction myInstructions[NUM_INST];
 
@@ -38,11 +45,47 @@ int main()
 
     for (size_t i = 0; i < NUM_INST; i++)
     {
+        //set set and tag for operation
         int set = myInstructions[i].wordAddress % 8;
         int tag = myInstructions[i].wordAddress / 8;
+        int blockNum; //set block to know which block contains data
+
+        //check cache for hit or miss
+        if (CacheMemory.sets[set][0].valid &&
+            CacheMemory.sets[set][0].tag == tag)
+        { //cache hit
+            blockNum = 0;
+            myInstructions[i].hit = true;
+        }
+        else if (CacheMemory.sets[set][1].valid &&
+                 CacheMemory.sets[set][1].tag == tag)
+        { //cache hit
+            blockNum = 1;
+            myInstructions[i].hit = true;
+        }
+        else //cache miss
+            myInstructions[i].hit = false;
+
+        if (myInstructions[i].opcode == LW) //perform load word operation
+        {
+            if (myInstructions[i].hit) //read hit case
+            { 
+            }
+            else //read miss case
+            {
+            }
+        }
+        else if (myInstructions[i].opcode == SW) //perform store word operation
+        {
+            if (myInstructions[i].hit) //store hit case
+            {
+            }
+            else //store miss case
+            {
+            }
+        }
     }
-    
-    
+
     return 0;
 }
 

@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#define LW 35   //load word opcode
+#define SW 43   //store word opcode
 
 using namespace std;
 

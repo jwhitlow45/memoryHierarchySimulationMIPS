@@ -38,16 +38,16 @@ void Instruction::printCacheResult()
 {
     if (hit)
     {
-        if (opcode == 35)
+        if (opcode == LW)
             cout << "read_hit";
-        else if (opcode == 43)
+        else if (opcode == SW)
             cout << "write_hit";
     }
     else
     {
-        if (opcode == 35)
+        if (opcode == LW)
             cout << "read_miss";
-        else if (opcode == 43)
+        else if (opcode == SW)
             cout << "write_miss";
     }
 }
