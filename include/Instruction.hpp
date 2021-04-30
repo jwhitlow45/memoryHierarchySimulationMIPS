@@ -13,6 +13,8 @@ public:
     int byteAddress; //byte address (rs + offset)
     int wordAddress; //word address (byte address / 4)
 
+    bool hit; //result of access
+
     int posBinaryToInt(string);     //convert pos binary to an int
     void decodeInstruction(string); //decode 32-bit instruction
     void print();                   //print instruction

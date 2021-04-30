@@ -9,6 +9,8 @@
 #include "Memory.hpp"
 #include "RegFile.hpp"
 
+#define NUM_INST 24     //number of instructions in the object code file
+
 using namespace std;
 
 string twosComp(string); //returns the twos complement of a binary number
@@ -17,14 +19,14 @@ void bitPrint(int, int); //prints out an integer in binary
 int main()
 {
     //create instruction array to store instructions
-    Instruction myInstructions[24];
+    Instruction myInstructions[NUM_INST];
 
     //create input file stream for reading obj code file
     ifstream FILE;
     FILE.open("resources/objectCode.txt");
     string line;
 
-    //read object code
+    //read object code into instruction array
     int i = 0;
     while (FILE >> line)
     {
@@ -34,11 +36,12 @@ int main()
     //close file
     FILE.close();
 
-    for (size_t i = 0; i < 24; i++)
+    for (size_t i = 0; i < NUM_INST; i++)
     {
-        myInstructions[i].print();
-        cout<<endl;
+        int set = myInstructions[i].wordAddress % 8;
+        int tag = myInstructions[i].wordAddress / 8;
     }
+    
     
     return 0;
 }
