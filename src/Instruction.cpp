@@ -14,6 +14,8 @@ int Instruction::posBinaryToInt(string binary)
 
 void Instruction::decodeInstruction(string binInst)
 {
+    //decode binary instruction and set all values
+    binaryInst = binInst;
     opcode = posBinaryToInt(binInst.substr(0, 6));
     baseReg = posBinaryToInt(binInst.substr(6, 5));
     offset = posBinaryToInt(binInst.substr(16, 16));
@@ -25,4 +27,9 @@ void Instruction::decodeInstruction(string binInst)
 void Instruction::print()
 {
     cout << opcode << ' ' << baseReg << ' ' << targetReg << ' ' << offset;
+}
+
+void Instruction::printBinary()
+{
+    cout << binaryInst;
 }
