@@ -1,5 +1,10 @@
 #include <iostream>
 #include <string>
+#include "Instruction.hpp"
+#include "Block.hpp"
+#include "Cache.hpp"
+#include "Memory.hpp"
+#include "RegFile.hpp"
 
 using namespace std;
 
@@ -8,6 +13,8 @@ void bitPrint(int, int); //prints out an integer in binary
 
 int main()
 {
+    Instruction Test;
+    cout<<Test.posBinaryToInt("101011");
 
     return 0;
 }
@@ -23,7 +30,7 @@ string twosComp(string binary)
             binary[i] = '0';
     }
 
-    int sum = 1;    //added 1
+    int sum = 1; //added 1
     int i = binary.size() - 1;
 
     //add 1
