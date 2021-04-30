@@ -16,4 +16,5 @@ public:
     }
 
     int getReg(int);
+    void setReg(int, int);
 };

@@ -6,3 +6,8 @@ int RegFile::getReg(int regNum)
         return zero;
     return reg[regNum - 16];
 }
+
+void RegFile::setReg(int regNum, int value)
+{
+    reg[regNum - 16] = value;
+}
