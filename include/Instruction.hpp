@@ -20,4 +20,5 @@ public:
     void decodeInstruction(string); //decode 32-bit instruction
     void print();                   //print instruction
     void printBinary();             //print instruction in binary
+    void printCacheResult();        //print whether cache read/write hit/miss
 };

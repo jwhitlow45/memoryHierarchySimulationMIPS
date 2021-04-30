@@ -33,3 +33,21 @@ void Instruction::printBinary()
 {
     cout << binaryInst;
 }
+
+void Instruction::printCacheResult()
+{
+    if (hit)
+    {
+        if (opcode == 35)
+            cout << "read_hit";
+        else if (opcode == 43)
+            cout << "write_hit";
+    }
+    else
+    {
+        if (opcode == 35)
+            cout << "read_miss";
+        else if (opcode == 43)
+            cout << "write_miss";
+    }
+}
