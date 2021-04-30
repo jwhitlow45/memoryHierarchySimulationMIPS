@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+
+//object header files
 #include "Instruction.hpp"
 #include "Block.hpp"
 #include "Cache.hpp"
@@ -13,7 +16,30 @@ void bitPrint(int, int); //prints out an integer in binary
 
 int main()
 {
+    //create instruction array to store instructions
+    Instruction myInstructions[24];
 
+    //create input file stream for reading obj code file
+    ifstream FILE;
+    FILE.open("resources/objectCode.txt");
+    string line;
+
+    //read object code
+    int i = 0;
+    while (FILE >> line)
+    {
+        myInstructions[i].decodeInstruction(line);
+        i++;
+    }
+    //close file
+    FILE.close();
+
+    for (size_t i = 0; i < 24; i++)
+    {
+        myInstructions[i].print();
+        cout<<endl;
+    }
+    
     return 0;
 }
 
