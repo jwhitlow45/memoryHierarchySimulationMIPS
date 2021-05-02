@@ -158,6 +158,16 @@ int main()
     }
 
     //print memory contents
+    cout << "\n\t\t\tMain Memory\n";
+    cout << "address\t\tdata\t\t\t\tAddress\t\tData\n";
+    for (size_t i = 0; i < 64; i++)
+    {
+        cout << i << '\t';
+        bitPrint(MainMemory.memory[i], 32);
+        cout << '\t' << i + 64 << '\t';
+        bitPrint(MainMemory.memory[i + 64], 32);
+        cout << endl;
+    }
 
     return 0;
 }
