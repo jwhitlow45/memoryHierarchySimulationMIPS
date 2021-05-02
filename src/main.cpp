@@ -73,6 +73,7 @@ int main()
                 //store cache data in register
                 RegisterFile.setReg(myInstructions[i].targetReg,
                                     CacheMemory.sets[set][blockNum].data);
+                CacheMemory.setBlockValid(set, blockNum);
                 CacheMemory.setBlockHistory(set, blockNum);
             }
             else //read miss case
@@ -86,8 +87,9 @@ int main()
                 //back up victim block to memory
                 CacheMemory.sets[set][victimBlock].data =
                     MainMemory.memory[myInstructions[i].wordAddress];
-                //set block history to 1 and update tag
+                //set block history to 1, set valid bit to 1, and update tag
                 CacheMemory.setBlockHistory(set, victimBlock);
+                CacheMemory.setBlockValid(set, victimBlock);
                 CacheMemory.sets[set][victimBlock].tag = tag;
                 // store cache data in register file
                 RegisterFile.setReg(myInstructions->targetReg,
@@ -101,7 +103,8 @@ int main()
                 //store register data into cache
                 CacheMemory.sets[set][blockNum].data =
                     RegisterFile.getReg(myInstructions[i].targetReg);
-                //write block history
+                //write block history and set valid bit to 1
+                CacheMemory.setBlockValid(set, blockNum);
                 CacheMemory.setBlockHistory(set, blockNum);
             }
             else //write miss case
@@ -113,8 +116,46 @@ int main()
         }
     }
 
-    //print out results
-    
+    //print out instructions
+    cout << "Binary\t\t\t\t\tResult\n";
+    for (size_t i = 0; i < NUM_INST; i++)
+    {
+        cout << myInstructions[i].binaryInst << '\t';
+        myInstructions[i].printCacheResult();
+        cout << endl;
+    }
+    cout << endl
+         << endl;
+
+    //print register file contents
+    cout << "Register File\n";
+    for (size_t i = 0; i < 8; i++)
+    {
+        cout << 's' << i << '\t';
+        bitPrint(RegisterFile.getReg(i + 16), 32);
+        cout << endl;
+    }
+
+    //print cache contents
+    cout << "\t\t\tCache\n";
+    cout << "block0\t\t\t\t\t\t\t\tblock1\n";
+    cout << "set\tvalid\ttag\tdata\t\t\t\t\tvalid\ttag\tdata\n";
+    for (size_t i = 0; i < 8; i++)
+    {
+        cout << i << '\t';
+        for (size_t j = 0; j < 2; j++)
+        {
+            cout << CacheMemory.sets[i][j].valid << '\t';
+            if (CacheMemory.sets[i][j].valid)
+                bitPrint(CacheMemory.sets[i][j].tag, 4);
+            else
+                cout << "0000";
+            cout << '\t';
+            bitPrint(CacheMemory.sets[i][j].data, 32);
+            cout << '\t';
+        }
+        cout << endl;
+    }
 
     return 0;
 }
