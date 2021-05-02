@@ -61,8 +61,6 @@ int main()
 
     for (size_t i = 0; i < NUM_INST; i++)
     {
-        cout << endl
-             << "$s1 " << RegisterFile.reg[1] << endl;
         //set set and tag for operation
         int set = myInstructions[i].wordAddress % 8;
         int tag = myInstructions[i].wordAddress / 8;
@@ -131,18 +129,6 @@ int main()
                     RegisterFile.getReg(myInstructions[i].targetReg);
             }
         }
-        cout << RegisterFile.reg[1] << endl;
-
-        cout << set << '\t' << CacheMemory.sets[set][0].valid
-             << '\t' << CacheMemory.sets[set][1].valid << '\t';
-        bitPrint(tag, 4);
-        cout << '\t';
-        bitPrint(CacheMemory.sets[5][0].data, 32);
-        cout << ' ';
-        bitPrint(CacheMemory.sets[5][1].data, 32);
-        cout << '\t';
-        myInstructions[i].printCacheResult();
-        cout << endl;
     }
 
     //print out instructions
