@@ -117,6 +117,7 @@ int main()
     }
 
     //print out instructions
+    cout << "\t\t\tInstructions\n";
     cout << "Binary\t\t\t\t\tResult\n";
     for (size_t i = 0; i < NUM_INST; i++)
     {
@@ -124,8 +125,7 @@ int main()
         myInstructions[i].printCacheResult();
         cout << endl;
     }
-    cout << endl
-         << endl;
+    cout << endl;
 
     //print register file contents
     cout << "Register File\n";
@@ -137,7 +137,7 @@ int main()
     }
 
     //print cache contents
-    cout << "\t\t\tCache\n";
+    cout << "\n\t\t\tCache\n";
     cout << "block0\t\t\t\t\t\t\t\tblock1\n";
     cout << "set\tvalid\ttag\tdata\t\t\t\t\tvalid\ttag\tdata\n";
     for (size_t i = 0; i < 8; i++)
