@@ -20,7 +20,7 @@ void bitPrint(int, int); //prints out an integer in binary
 
 int main()
 {
-    //Instantiate Cache, Main Memory, and REgister File
+    //Instantiate Cache, Main Memory, and Register File
     RegFile RegisterFile;
     Cache CacheMemory;
     Memory MainMemory;
@@ -68,23 +68,53 @@ int main()
 
         if (myInstructions[i].opcode == LW) //perform load word operation
         {
-            if (myInstructions[i].hit) //read hit case
-            { 
+            if (myInstructions[i].hit) //read hit case (store data from cache to register)
+            {
+                //store cache data in register
+                RegisterFile.setReg(myInstructions[i].targetReg,
+                                    CacheMemory.sets[set][blockNum].data);
+                CacheMemory.setBlockHistory(set, blockNum);
             }
             else //read miss case
             {
+                //select victim block
+                int victimBlock = CacheMemory.getVictimBlock(set);
+                //update memory if victim block is valid
+                if (CacheMemory.sets[set][victimBlock].valid == 1)
+                    MainMemory.memory[(tag * 8 + set)] =
+                        CacheMemory.sets[set][victimBlock].data;
+                //back up victim block to memory
+                CacheMemory.sets[set][victimBlock].data =
+                    MainMemory.memory[myInstructions[i].wordAddress];
+                //set block history to 1 and update tag
+                CacheMemory.setBlockHistory(set, victimBlock);
+                CacheMemory.sets[set][victimBlock].tag = tag;
+                // store cache data in register file
+                RegisterFile.setReg(myInstructions->targetReg,
+                                    CacheMemory.sets[set][victimBlock].data);
             }
         }
         else if (myInstructions[i].opcode == SW) //perform store word operation
         {
-            if (myInstructions[i].hit) //store hit case
+            if (myInstructions[i].hit) //write hit case
             {
+                //store register data into cache
+                CacheMemory.sets[set][blockNum].data =
+                    RegisterFile.getReg(myInstructions[i].targetReg);
+                //write block history
+                CacheMemory.setBlockHistory(set, blockNum);
             }
-            else //store miss case
+            else //write miss case
             {
+                //store register data into main memory
+                MainMemory.memory[myInstructions[i].wordAddress] =
+                    RegisterFile.getReg(myInstructions[i].targetReg);
             }
         }
     }
+
+    //print out results
+    
 
     return 0;
 }
