@@ -1,5 +1,6 @@
 #pragma once
 #include "Block.hpp"
+#include <cstddef>
 
 class Cache
 {

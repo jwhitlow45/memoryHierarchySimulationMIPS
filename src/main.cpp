@@ -25,6 +25,21 @@ int main()
     Cache CacheMemory;
     Memory MainMemory;
 
+    //initialize cache and memory
+    for (size_t i = 0; i < 8; i++)
+    {
+        RegisterFile.reg[i] = 0;
+        for (size_t j = 0; j < 2; j++)
+        {
+            CacheMemory.sets[i][j].valid = 0;
+            CacheMemory.sets[i][j].tag = 0;
+            CacheMemory.sets[i][j].data = 0;
+        }
+    }
+
+    for (size_t i = 0; i < 128; i++)
+        MainMemory.memory[i] = i + 5;
+
     //create instruction array to store instructions
     Instruction myInstructions[NUM_INST];
 
@@ -40,11 +55,14 @@ int main()
         myInstructions[i].decodeInstruction(line);
         i++;
     }
+
     //close file
     FILE.close();
 
     for (size_t i = 0; i < NUM_INST; i++)
     {
+        cout << endl
+             << "$s1 " << RegisterFile.reg[1] << endl;
         //set set and tag for operation
         int set = myInstructions[i].wordAddress % 8;
         int tag = myInstructions[i].wordAddress / 8;
@@ -73,7 +91,6 @@ int main()
                 //store cache data in register
                 RegisterFile.setReg(myInstructions[i].targetReg,
                                     CacheMemory.sets[set][blockNum].data);
-                CacheMemory.setBlockValid(set, blockNum);
                 CacheMemory.setBlockHistory(set, blockNum);
             }
             else //read miss case
@@ -92,7 +109,7 @@ int main()
                 CacheMemory.setBlockValid(set, victimBlock);
                 CacheMemory.sets[set][victimBlock].tag = tag;
                 // store cache data in register file
-                RegisterFile.setReg(myInstructions->targetReg,
+                RegisterFile.setReg(myInstructions[i].targetReg,
                                     CacheMemory.sets[set][victimBlock].data);
             }
         }
@@ -114,6 +131,18 @@ int main()
                     RegisterFile.getReg(myInstructions[i].targetReg);
             }
         }
+        cout << RegisterFile.reg[1] << endl;
+
+        cout << set << '\t' << CacheMemory.sets[set][0].valid
+             << '\t' << CacheMemory.sets[set][1].valid << '\t';
+        bitPrint(tag, 4);
+        cout << '\t';
+        bitPrint(CacheMemory.sets[5][0].data, 32);
+        cout << ' ';
+        bitPrint(CacheMemory.sets[5][1].data, 32);
+        cout << '\t';
+        myInstructions[i].printCacheResult();
+        cout << endl;
     }
 
     //print out instructions
