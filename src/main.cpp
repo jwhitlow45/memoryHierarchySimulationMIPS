@@ -150,7 +150,7 @@ int main()
         MainMemory.memory[i] = i + 5;
 
     //create instruction array to store instructions
-    Instruction myInstructions[NUM_INST];
+    Instruction* myInstructions = new Instruction[NUM_INST];
 
     //create input file stream for reading obj code file
     ifstream FILE;
@@ -292,6 +292,8 @@ int main()
         bitPrint(MainMemory.memory[i + 64], 32);
         cout << endl;
     }
+
+    delete[] myInstructions;    //clean up dynamic memory
 
     return 0;
 }
