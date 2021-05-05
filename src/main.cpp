@@ -208,7 +208,7 @@ int main()
                 if (CacheMemory.sets[set][victimBlock].valid == 1)
                     MainMemory.memory[(tag * 8 + set)] =
                         CacheMemory.sets[set][victimBlock].data;
-                //back up victim block to memory
+                //overwrite cache data from memory at word address
                 CacheMemory.sets[set][victimBlock].data =
                     MainMemory.memory[myInstructions[i].wordAddress];
                 //set block history to 1, set valid bit to 1, and update tag
