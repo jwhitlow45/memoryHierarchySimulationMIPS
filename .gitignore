@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# File structure
+/bin
+/lib
+Makefile
+*.swp
