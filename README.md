@@ -1,15 +1,12 @@
 # MIPS Memory Hierarchy Simulation
+
+## Program Description
+
 A program that emulates a MIPS CPU reading binary instructions and performing load-word and store-word operations into an L1 cache and main memory module.
 
 The cache used is a two-way set-associative utilizing least recently used write back policy.
 
 ![image](https://user-images.githubusercontent.com/46979583/121729240-395d2480-cabc-11eb-8383-f99a8d272a40.png)
-
-## Program Description
-
-This program emulates the manipulation of Cache, Register File, and Memory by instructions executed by a
-MIPS CPU. The output displays the instructions, in order, that were executed by the CPU, as well as the contents
-of the Register File, Cache, and Main Memory.
 
 ## Methodologies/Technologies/Algorithm/Schema/Domain
 
